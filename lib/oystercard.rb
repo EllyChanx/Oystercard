@@ -8,7 +8,8 @@ class Oystercard
     @in_use = false
     @entry_station = entry_station
     @exit_station = exit_station
-    @journey = {}
+    @cur_journey = {}
+    @journey_history = []
   end
 
   def top_up(amount)
@@ -19,16 +20,15 @@ class Oystercard
   def touch_in(station)
     @in_use = true if @in_use == false
     fail "Insufficient funds for journey" if @balance < MINIMUM_FARE
-    @journey.store(:entry_station, station)
     @entry_station = station
-    return station
+    @cur_journey.store(:entry_station, station)
   end
 
   def touch_out(station)
     @in_use = false if @in_use == true
     deduct(MINIMUM_FARE)
-    @journey.store(:exit_station, station)
     @exit_station = station
+    @cur_journey.store(:exit_station, station)
     @entry_station = nil
 	end
 
@@ -39,7 +39,7 @@ class Oystercard
   end
 
   def journey
-    @journey
+    @journey_history << @cur_journey
   end
 
 private

@@ -45,8 +45,8 @@ describe Oystercard do
 
 	describe "#in-out journey" do
 
-		let (:station1) {double :xxx}
-		let (:station2) {double :yyy}
+		let (:station1) {double :station1}
+		let (:station2) {double :station2}
 
 		it "checks if you are in journey after touched in" do
 			subject.top_up(5)
@@ -74,7 +74,8 @@ describe Oystercard do
 		it "store the entery and exit station" do
 			subject.top_up(5)
 			subject.touch_in(station1)
-			expect(subject.journey).to include(:entry_station  => station1)
+			subject.touch_out(station2)
+			expect(subject.journey).to eq [{:entry_station=>station1, :exit_station=>station2}]
 		end
 
 	end
