@@ -64,12 +64,12 @@ describe Oystercard do
 			expect{ subject.touch_in(station1) }.to raise_error "Insufficient funds for journey"
 		end
 
-		it "accept station when touch out" do
-			subject.top_up(5)
-			subject.touch_in(station1)
-			subject.touch_out(station2)
-			expect(subject.exit_station).to eq station2
-		end
+		# it "accept station when touch out" do
+		# 	subject.top_up(5)
+		# 	subject.touch_in(station1)
+		# 	expect(subject.touch_out(station2))
+		# 	expect(subject.exit_station).to eq station2
+		# end
 
 		it "store the entery and exit station" do
 			subject.top_up(5)
