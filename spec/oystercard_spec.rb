@@ -32,12 +32,14 @@ describe Oystercard do
 
 		it "deducts the correct fair from balance" do
 			station = Oystercard.new
+			subject.touch_in(station)
 			subject.touch_out(station)
 			expect(subject.balance).to eq(4)
 		end
 
 		it "make sure the journey has been paid for" do
 			station = Oystercard.new
+			subject.touch_in(station)
 			expect{ subject.touch_out(station) }.to change{ subject.balance }.by -Oystercard::MINIMUM_FARE
 		end
 
@@ -82,7 +84,7 @@ describe Oystercard do
 			subject.top_up(5)
 			subject.touch_in(station1)
 			subject.touch_out(station2)
-			expect(subject.journey).to eq [{:entry_station=>station1, :exit_station=>station2}]
+			expect(subject.card_history).to eq [{:entry_station=>station1, :exit_station=>station2}]
 		end
 
 	end
