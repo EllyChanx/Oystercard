@@ -48,17 +48,24 @@ describe Oystercard do
 		let (:station1) {double :station1}
 		let (:station2) {double :station2}
 
-		it "checks if you are in journey after touched in" do
+
+		it "no action return in_use false" do
+			expect(subject.in_use?).to be false
+		end
+
+		it "touched in return in_use true" do
 			subject.top_up(5)
 			subject.touch_in(station1)
-			expect(subject).to be_in_journey
+			expect(subject.in_use?).to be true
 		end
-		it "check if you are not in journey after touch out" do
+
+		it "touch out return in_use false" do
 			subject.top_up(5)
 			subject.touch_in(station1)
 			subject.touch_out(station2)
-			expect(subject).to_not be_in_journey
+			expect(subject.in_use?).to be false
 		end
+
 		it "ensures the card has sufficient balance for journey" do
 			subject.top_up(0)
 			expect{ subject.touch_in(station1) }.to raise_error "Insufficient funds for journey"
@@ -69,7 +76,7 @@ describe Oystercard do
 		# 	subject.touch_in(station1)
 		# 	expect(subject.touch_out(station2))
 		# 	expect(subject.exit_station).to eq station2
-		# end
+		# end ---- removed entry/exit_station method
 
 		it "store the entery and exit station" do
 			subject.top_up(5)
