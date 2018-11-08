@@ -73,19 +73,9 @@ describe Oystercard do
 			expect{ subject.touch_in(station1) }.to raise_error "Insufficient funds for journey"
 		end
 
-		# it "accept station when touch out" do
-		# 	subject.top_up(5)
-		# 	subject.touch_in(station1)
-		# 	expect(subject.touch_out(station2))
-		# 	expect(subject.exit_station).to eq station2
-		# end ---- removed entry/exit_station method
+	end
 
-		# it "store the entery and exit station" do 
-		# 	subject.top_up(5)
-		# 	subject.touch_in(station1)
-		# 	subject.touch_out(station2)
-		# 	expect(subject.card_history).to eq [{:entry_station=>station1, :exit_station=>station2}]
-		# end
+	describe "#zone testing" do
 
 	end
 

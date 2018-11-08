@@ -3,7 +3,7 @@ require 'station'
 describe Station do
 
   let(:zone1) {double :zone1}
-  let(:somewhere) {double :somethere}
+  let(:somewhere) {double :somewhere}
   #let(:station) {Station.new(name, zone)}
 
   it 'return station name' do

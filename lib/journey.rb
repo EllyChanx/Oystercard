@@ -1,10 +1,11 @@
+require_relative "station"
+
 class Journey
 
   PENALTY_FARE = 6
 
 	def initialize
 		@in_use = false
-    @fare
     @journeylog = JourneyLog.new
 	end
 
@@ -13,21 +14,31 @@ class Journey
   end
 
   def entry(station)
-    return fare if @in_use == true
     @in_use = true
-    @journeylog.start(station)
-    # @cur_journey.store(:entry_station, station)
+    @entry_station = station
+    # @journeylog.start(station)
   end
 
   def exit(station)
-    return fare if @in_use == false
     @in_use = false
-    @journeylog.finish(station)
-    # @cur_journey.store(:exit_station, station)
+    @exit_station = station
+    # @journeylog.finish(station)
   end
 
-  def fare(amount = PENALTY_FARE)
-    return amount
+  def completed?
+    !!@entry_station && !!@exit_station
   end
+
+  def fare(amount)
+    return PENALTY_FARE unless completed?
+    amount
+  end
+
+  def fare_cal
+    return fare(1) if @entry_station.zone == @exit_station.zone
+    return fare(2) if [@entry_station.zone, @exit_station.zone].max < 3
+    return fare(3) if [@entry_station.zone, @exit_station.zone].min > 2
+  end
+
 
 end
