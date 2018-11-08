@@ -2,20 +2,32 @@ require "journeylog"
 
 describe JourneyLog do 
 
-	# it "store the entery and exit station" do
-	# 	subject.entry(station1)
-	# 	subject.exit(station2)
-	# 	expect(subject.journey_history).to eq [{:entry_station=>station1, :exit_station=>station2}]
+	let (:station1) {double :station1}
+	let (:station2) {double :station2}
+
+	# let(:journey){ double :journey } #this may need to have some methods
+ #  let(:station){ double :station }
+ #  let(:journey_class){double :journey_class, new: journey}
+ #  subject {described_class.new(journey_class: journey_class)}
+
+	# it "start would starts a new journey" do
+	# 	expect(subject.start(teststation)).to include(:entry_station => teststation)
 	# end
 
-	# it "start would starts a new journey - empty hash" do
+	it "store the entery and exit station" do
+		subject.start(station1)
+		subject.finish(station2)
+		expect(subject.journey_history).to eq [{:entry_station=>station1, :exit_station=>station2}]
+	end
 		
-	# end
+  it 'journey records a new journey' do
+    expect(subject.journey_history).to eq [nil]
+  end
 
-#start should start a new journey with an entry station 
-# a private method #current_journey should return an incomplete journey or create a new journey
- #finish should add an exit station to the current_journey
- #journeys should return a list of all previous journeys without exposing the internal array to external modification
+  it 'journey records a starts journey' do
+  	subject.start(station1)
+    expect(subject.journey_history).to eq [{:entry_station=>station1}]
+  end
 
 
 end 

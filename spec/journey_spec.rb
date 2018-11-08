@@ -13,12 +13,6 @@ describe Journey do
 		subject.entry(station1)
 		expect(subject.in_journey?).to eq true
 	end
-
-	it "store the entery and exit station" do
-		subject.entry(station1)
-		subject.exit(station2)
-		expect(subject.journey_history).to eq [{:entry_station=>station1, :exit_station=>station2}]
-	end
 	
   it 'default penalty fare' do
     expect(subject.fare).to eq Journey::PENALTY_FARE
@@ -32,5 +26,11 @@ describe Journey do
   it "penalty if exit when card is not in use" do
   	expect(subject.exit(station1)).to eq Journey::PENALTY_FARE
   end
+
+ #  it "store the entery and exit station" do
+	# 	subject.entry(station1)
+	# 	subject.exit(station2)
+	# 	expect(subject.journey_history).to eq [{:entry_station=>station1, :exit_station=>station2}]
+	# end
 
 end

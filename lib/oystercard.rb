@@ -31,10 +31,6 @@ class Oystercard
     @journey.in_journey?
   end
 
-  def card_history #useless method, test purpose
-    @journey.journey_history
-  end
-
 private
   def deduct(amount)
     @balance -= amount

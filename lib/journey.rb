@@ -4,9 +4,8 @@ class Journey
 
 	def initialize
 		@in_use = false
-    @cur_journey = {}
-    @journey_history = []
     @fare
+    @journeylog = JourneyLog.new
 	end
 
 	def in_journey?
@@ -16,17 +15,15 @@ class Journey
   def entry(station)
     return fare if @in_use == true
     @in_use = true
-    @cur_journey.store(:entry_station, station)
+    @journeylog.start(station)
+    # @cur_journey.store(:entry_station, station)
   end
 
   def exit(station)
     return fare if @in_use == false
     @in_use = false
-    @cur_journey.store(:exit_station, station)
-  end
-
-  def journey_history
-    @journey_history << @cur_journey
+    @journeylog.finish(station)
+    # @cur_journey.store(:exit_station, station)
   end
 
   def fare(amount = PENALTY_FARE)
