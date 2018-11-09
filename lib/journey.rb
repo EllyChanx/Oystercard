@@ -16,28 +16,20 @@ class Journey
   def entry(station)
     @in_use = true
     @entry_station = station
-    # @journeylog.start(station)
   end
 
   def exit(station)
     @in_use = false
     @exit_station = station
-    # @journeylog.finish(station)
   end
 
   def completed?
     !!@entry_station && !!@exit_station
   end
 
-  def fare(amount)
+  def fare
     return PENALTY_FARE unless completed?
-    amount
-  end
-
-  def fare_cal
-    return fare(1) if @entry_station.zone == @exit_station.zone
-    return fare(2) if [@entry_station.zone, @exit_station.zone].max < 3
-    return fare(3) if [@entry_station.zone, @exit_station.zone].min > 2
+    (@entry_station.zone - @exit_station.zone).abs + 1
   end
 
 

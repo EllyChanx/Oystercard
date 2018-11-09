@@ -13,27 +13,33 @@ class Oystercard
   end
 
   def top_up(amount)
-  	fail "Maximum balance of #{MAXIMUM_BALANCE} exceeded" if (@balance + amount > MAXIMUM_BALANCE)
+  	fail "Maximum balance of #{MAXIMUM_BALANCE} exceeded" if upper_limit?(amount)
     @balance += amount.to_i
   end
 
   def touch_in(station)
     fail "Insufficient funds for journey" if @balance < MINIMUM_FARE
+    return deduct(@journey.fare) if in_use?
     @journey.entry(station)
   end
 
   def touch_out(station)
     @journey.exit(station)
-    deduct(MINIMUM_FARE)
+    deduct(@journey.fare)
 	end
 
-  def in_use? #useless method, test purpose
+  def in_use?
     @journey.in_journey?
   end
 
 private
-  def deduct(amount)
-    @balance -= amount
+
+  def upper_limit?(amount)
+    (amount + @balance) > MAXIMUM_BALANCE
+  end
+
+  def deduct(fare)
+    @balance -= fare
   end
 
 
